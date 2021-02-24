@@ -48,7 +48,7 @@ public class Task {
     @JoinColumn(name = "app_user_id")
     @Getter
     @Setter
-    @NotNull(message = "O usuário é obrigatório")
+    // @NotNull(message = "O usuário é obrigatório")
     private AppUser appUser;
 
     public Task(String description, LocalDate whenToDo, Boolean done, AppUser appUser) {
