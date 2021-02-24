@@ -31,11 +31,9 @@ public class AppUser {
     @Setter
     private String displayName;
 
-
-    public AppUser (String username, String password, String displayName) {
+    public AppUser(String username, String password, String displayName) {
         this.username = username;
         this.password = password;
         this.displayName = displayName;
-
     }
 }
