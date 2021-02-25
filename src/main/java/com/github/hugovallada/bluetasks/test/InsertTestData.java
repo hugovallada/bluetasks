@@ -10,11 +10,12 @@ import com.github.hugovallada.bluetasks.domain.user.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.stereotype.Component;
 
 @Component
 public class InsertTestData {
-    
+
     private TaskRepository taskRepository;
 
     private AppUserRepository appUserRepository;
@@ -26,18 +27,17 @@ public class InsertTestData {
     }
 
     @EventListener
-    public void onApplicationEvent(ContextRefreshedEvent event){
-        //TODO: Criptografar senha
-        var appUser= new AppUser("John", "123456", "John Coder");
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        var encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        var appUser = new AppUser("John", encoder.encode("123456"), "John Coder");
         appUserRepository.save(appUser);
 
         var baseDate = LocalDate.parse("2022-02-01");
 
         for (int i = 1; i <= 10; i++) {
-            var task = new Task("Tarefa #" +i, baseDate.plusDays(i), false, appUser);
+            var task = new Task("Tarefa #" + i, baseDate.plusDays(i), false, appUser);
             taskRepository.save(task);
         }
     }
 
-    
 }
