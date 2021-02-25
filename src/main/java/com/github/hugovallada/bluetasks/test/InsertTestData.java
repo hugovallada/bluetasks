@@ -32,10 +32,18 @@ public class InsertTestData {
         var appUser = new AppUser("John", encoder.encode("123456"), "John Coder");
         appUserRepository.save(appUser);
 
+        var appUser2 = new AppUser("Paul", encoder.encode("123456"), "Paul Dev");
+        appUserRepository.save(appUser2);
+
         var baseDate = LocalDate.parse("2022-02-01");
 
         for (int i = 1; i <= 10; i++) {
             var task = new Task("Tarefa #" + i, baseDate.plusDays(i), false, appUser);
+            taskRepository.save(task);
+        }
+
+        for (int i = 11; i <= 16; i++) {
+            var task = new Task("Tarefa # " + i, baseDate.plusDays(i), false, appUser2);
             taskRepository.save(task);
         }
     }
