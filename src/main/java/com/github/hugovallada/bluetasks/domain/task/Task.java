@@ -3,6 +3,7 @@ package com.github.hugovallada.bluetasks.domain.task;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -11,6 +12,7 @@ import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.hugovallada.bluetasks.domain.user.AppUser;
 
 import org.hibernate.validator.constraints.Length;
@@ -20,6 +22,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@EntityListeners(TaskListener.class)
 @NoArgsConstructor
 public class Task {
 
@@ -48,7 +51,7 @@ public class Task {
     @JoinColumn(name = "app_user_id")
     @Getter
     @Setter
-    // @NotNull(message = "O usuário é obrigatório")
+    @JsonIgnore // qnd transformar a task em json, essa propriedade será ignorada
     private AppUser appUser;
 
     public Task(String description, LocalDate whenToDo, Boolean done, AppUser appUser) {
